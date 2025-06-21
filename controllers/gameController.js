@@ -3,27 +3,31 @@ const { gameValidation } = require('../utils/validation');
 
 exports.createGame = async (req, res) => {
   try {
-    // Remove image from required validation since it's auto-generated
-    const { error } = gameValidation.create.validate(req.body, {
-      allowUnknown: true // Allows fields not in schema (like image)
-    });
-    
-    if (error) return res.status(400).send({ error: error.details[0].message });
-
-    // Create game with user ID - image will auto-generate via schema
-    const game = new Game({ 
+    const gameData = {
       ...req.body,
       user: req.user._id,
       _id: undefined // Explicitly prevent _id
-    });
-    
+    };
+
+    const game = new Game(gameData);
     await game.save();
+    
     res.status(201).send(game);
   } catch (err) {
+    console.error('Creation error:', err);
+    
     if (err.code === 11000) {
-      return res.status(400).send({ error: 'Game with this ID already exists' });
+      return res.status(400).json({
+        error: 'Duplicate game ID',
+        message: `Game with ID ${req.body.id} already exists`
+      });
     }
-    res.status(500).send({ error: 'Failed to create game' });
+    
+    res.status(500).json({
+      error: 'Creation failed',
+      details: err.message,
+      receivedData: req.body // For debugging
+    });
   }
 };
 
