@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const Game = require('../models/Game');
+const rateLimit = require('express-rate-limit');
+const publicController = require('../controllers/publicController');
+
+const publicLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per window
+  message: { error: "Too many requests, please try again later" }
+});
 
 /**
  * @swagger
@@ -24,29 +31,6 @@ const Game = require('../models/Game');
  *               items:
  *                 $ref: '#/components/schemas/PublicGame'
  */
-// Remove rate limiting temporarily for testing
-router.get('/games/:userId', async (req, res) => {
-  try {
-    const games = await Game.find({
-      user: req.params.userId,
-      isPublic: true
-    }).select('id title progress difficulty hours createdAt -_id');
-
-    if (!games.length) {
-      return res.status(404).send({ 
-        error: "No public games found or user doesn't exist" 
-      });
-    }
-
-    res.send(games.map(game => ({
-      ...game.toObject(),
-      isCompleted: game.progress === 100,
-      image: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game.id}/header.jpg`
-    })));
-  } catch (err) {
-    console.error("Public endpoint error:", err);
-    res.status(500).send({ error: "Server error" });
-  }
-});
+router.get('/games/:userId', publicLimiter, publicController.getPublicGames);
 
 module.exports = router;

@@ -5,12 +5,10 @@ exports.getPublicGames = async (req, res) => {
     const games = await Game.find({
       user: req.params.userId,
       isPublic: true
-    }).select('title progress difficulty isCompleted');
+    }).select('appId title progress difficulty isCompleted -_id');
     
-    games.length 
-      ? res.send(games)
-      : res.status(404).send({ error: "No public games found" });
+    res.send(games);
   } catch (err) {
-    res.status(500).send({ error: "Server error" });
+    res.status(500).send({ error: "Failed to fetch public games" });
   }
 };

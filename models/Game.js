@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const gameSchema = new mongoose.Schema({
-  id: {
+  appId: {
     type: Number,
     required: true,
     unique: true
@@ -9,30 +9,33 @@ const gameSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true,
-    maxlength: 100
+    trim: true
   },
-  category: String,
+  category: {
+    type: String,
+    required: true,
+    trim: true
+  },
   difficulty: {
     type: String,
-    enum: ['easy', 'medium', 'hard'],
-    required: true
+    required: true,
+    enum: ['easy', 'medium', 'hard']
   },
   hours: {
     type: Number,
-    min: 0,
-    required: true
+    required: true,
+    min: 0
   },
   progress: {
     type: Number,
+    required: true,
     min: 0,
-    max: 100,
-    required: true
+    max: 100
   },
   image: {
     type: String,
     default: function() {
-      return `https://cdn.cloudflare.steamstatic.com/steam/apps/${this.id}/header.jpg`;
+      return `https://cdn.cloudflare.steamstatic.com/steam/apps/${this.appId}/header.jpg`;
     }
   },
   user: {
@@ -42,13 +45,12 @@ const gameSchema = new mongoose.Schema({
   },
   isPublic: {
     type: Boolean,
-    default: false
+    default: true // Or false depending on your preference
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
-}, {
-  // Critical configuration
-  _id: false,             // Disable automatic _id
-  timestamps: true,       // Add createdAt/updatedAt
-  versionKey: false       // Disable __v field
 });
 
 // Virtual property

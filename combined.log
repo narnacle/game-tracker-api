@@ -42,3 +42,17 @@
 {"level":"info","message":"::1 - - [20/Jun/2025:23:20:48 +0000] \"GET /api-docs/swagger-ui-init.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\""}
 {"level":"info","message":"::1 - - [20/Jun/2025:23:20:48 +0000] \"GET /api-docs/swagger-ui-standalone-preset.js HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\""}
 {"level":"info","message":"::1 - - [20/Jun/2025:23:20:49 +0000] \"GET /api-docs/favicon-32x32.png HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:36:38 +0000] \"POST /auth/register HTTP/1.1\" 400 31 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:36:43 +0000] \"POST /auth/login HTTP/1.1\" 200 399 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:36:58 +0000] \"POST /games HTTP/1.1\" 400 33 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:40:10 +0000] \"POST /auth/login HTTP/1.1\" 200 399 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:40:19 +0000] \"POST /games HTTP/1.1\" 500 33 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:42:25 +0000] \"POST /auth/login HTTP/1.1\" 200 399 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:42:41 +0000] \"POST /games HTTP/1.1\" 500 33 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:42:43 +0000] \"POST /games HTTP/1.1\" 500 33 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:42:44 +0000] \"POST /games HTTP/1.1\" 500 33 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:42:45 +0000] \"POST /games HTTP/1.1\" 500 33 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:43:13 +0000] \"POST /games HTTP/1.1\" 400 30 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:44:11 +0000] \"POST /auth/login HTTP/1.1\" 200 399 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:44:17 +0000] \"POST /games HTTP/1.1\" 201 312 \"-\" \"PostmanRuntime/7.44.0\""}
+{"level":"info","message":"::1 - - [21/Jun/2025:03:44:52 +0000] \"GET /public/games/6855feb25e85c22baee50015 HTTP/1.1\" 404 176 \"-\" \"PostmanRuntime/7.44.0\""}

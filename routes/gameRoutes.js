@@ -5,74 +5,6 @@ const auth = require('../middlewares/auth');
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     Game:
- *       type: object
- *       required:
- *         - id
- *         - title
- *         - difficulty
- *         - hours
- *         - progress
- *       properties:
- *         id:
- *           type: integer
- *           example: 990080
- *         title:
- *           type: string
- *           maxLength: 100
- *           example: "Hogwarts Legacy"
- *         category:
- *           type: string
- *           example: "action adventure rpg"
- *         difficulty:
- *           type: string
- *           enum: [easy, medium, hard]
- *           example: "easy"
- *         hours:
- *           type: number
- *           minimum: 0
- *           example: 30
- *         progress:
- *           type: number
- *           minimum: 0
- *           maximum: 100
- *           example: 33
- *         image:
- *           type: string
- *           format: uri
- *           readOnly: true
- *           example: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg"
- *         isCompleted:
- *           type: boolean
- *           readOnly: true
- *           description: Auto-computed from progress
- *         user:
- *           type: string
- *           format: objectId
- *           readOnly: true
- *         createdAt:
- *           type: string
- *           format: date-time
- *           readOnly: true
- *     PublicGame:
- *       type: object
- *       properties:
- *         id:
- *           type: number
- *         title:
- *           type: string
- *         progress:
- *           type: number
- *         difficulty:
- *           type: string
- *         isCompleted:
- *           type: boolean
- */
-
-/**
- * @swagger
  * tags:
  *   name: Games
  *   description: Game management
@@ -80,32 +12,9 @@ const auth = require('../middlewares/auth');
 
 /**
  * @swagger
- * /users/{userId}/games:
- *   get:
- *     summary: Get public game data for any user
- *     tags: [Public]
- *     parameters:
- *       - in: path
- *         name: userId
- *         schema:
- *           type: string
- *         required: true
- *     responses:
- *       200:
- *         description: Public game data
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/PublicGame'
- */
-
-/**
- * @swagger
  * /games:
  *   post:
- *     summary: Create a new game (image URL auto-generated)
+ *     summary: Create a new game
  *     tags: [Games]
  *     security:
  *       - bearerAuth: []
@@ -118,38 +27,32 @@ const auth = require('../middlewares/auth');
  *             required:
  *               - id
  *               - title
+ *               - category
  *               - difficulty
  *               - hours
  *               - progress
+ *               - image
  *             properties:
  *               id:
- *                 type: integer
- *                 example: 990080
+ *                 type: number
  *               title:
  *                 type: string
- *                 example: "Hogwarts Legacy"
  *               category:
  *                 type: string
- *                 example: "action adventure rpg"
  *               difficulty:
  *                 type: string
  *                 enum: [easy, medium, hard]
- *                 example: "easy"
  *               hours:
  *                 type: number
- *                 example: 30
  *               progress:
  *                 type: number
- *                 example: 33
+ *               image:
+ *                 type: string
  *     responses:
  *       201:
- *         description: Game created
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Game'
+ *         description: Game created successfully
  *       400:
- *         description: Validation error
+ *         description: Validation error or game ID exists
  */
 router.post('/', auth.authenticate, gameController.createGame);
 
@@ -157,19 +60,13 @@ router.post('/', auth.authenticate, gameController.createGame);
  * @swagger
  * /games:
  *   get:
- *     summary: Get all games with computed fields
+ *     summary: Get all games for the authenticated user
  *     tags: [Games]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: List of games with auto-generated fields
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Game'
+ *         description: List of games
  */
 router.get('/', auth.authenticate, gameController.getGames);
 
@@ -177,7 +74,7 @@ router.get('/', auth.authenticate, gameController.getGames);
  * @swagger
  * /games/{id}:
  *   get:
- *     summary: Get a game with computed fields
+ *     summary: Get a specific game
  *     tags: [Games]
  *     security:
  *       - bearerAuth: []
@@ -186,15 +83,11 @@ router.get('/', auth.authenticate, gameController.getGames);
  *         name: id
  *         schema:
  *           type: string
- *           pattern: '^[0-9a-fA-F]{24}$'
  *         required: true
+ *         description: Game ID
  *     responses:
  *       200:
- *         description: Game data with auto-computed fields
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Game'
+ *         description: Game data
  *       404:
  *         description: Game not found
  */

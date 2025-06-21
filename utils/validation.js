@@ -14,13 +14,12 @@ const userValidation = {
 
 const gameValidation = {
   create: Joi.object({
-    id: Joi.number().required(),
+    appId: Joi.number().required(),
     title: Joi.string().required(),
     category: Joi.string().required(),
     difficulty: Joi.string().valid('easy', 'medium', 'hard').required(),
     hours: Joi.number().min(0).required(),
-    progress: Joi.number().min(0).max(100).required(),
-    // Removed image from required fields
+    progress: Joi.number().min(0).max(100).required()
   }),
   update: Joi.object({
     hours: Joi.number().min(0),
