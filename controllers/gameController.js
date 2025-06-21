@@ -13,7 +13,8 @@ exports.createGame = async (req, res) => {
     // Create game with user ID - image will auto-generate via schema
     const game = new Game({ 
       ...req.body,
-      user: req.user._id 
+      user: req.user._id,
+      _id: undefined // Explicitly prevent _id
     });
     
     await game.save();
