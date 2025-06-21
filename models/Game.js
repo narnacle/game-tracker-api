@@ -4,26 +4,26 @@ const gameSchema = new mongoose.Schema({
   id: {
     type: Number,
     required: true,
-    unique: true
+    unique: true  // This creates the index - remove gameSchema.index({id:1})
   },
   title: {
     type: String,
     required: true,
-    trim: true,          // Added string trimming
-    maxlength: 100       // Added max length
+    trim: true,
+    maxlength: 100
   },
   category: {
     type: String,
-    trim: true           // Added for consistency
+    trim: true
   },
   difficulty: {
     type: String,
     enum: ['easy', 'medium', 'hard'],
-    required: true       // Made required
+    required: true
   },
   hours: {
     type: Number,
-    min: 0,              // Added minimum value
+    min: 0,
     required: true
   },
   progress: {
@@ -37,7 +37,7 @@ const gameSchema = new mongoose.Schema({
     default: function() {
       return `https://cdn.cloudflare.steamstatic.com/steam/apps/${this.id}/header.jpg`;
     },
-    validate: {          // Added URL validation
+    validate: {
       validator: v => /^https?:\/\/.+\..+/.test(v),
       message: props => `${props.value} is not a valid URL!`
     }
@@ -49,20 +49,21 @@ const gameSchema = new mongoose.Schema({
   }
 }, { 
   timestamps: true,
-  toJSON: { virtuals: true },  // Include virtuals when converted to JSON
-  toObject: { virtuals: true } // Include virtuals when converted to objects
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
 });
 
-// Add indexes (place AFTER schema definition)
-gameSchema.index({ id: 1 });               // Single field index
-gameSchema.index({ user: 1, id: 1 });      // Compound index
+// REMOVED the duplicate: gameSchema.index({ id: 1 });
 
-// Add virtual property (place AFTER schema definition)
+// Keep compound index (not duplicate)
+gameSchema.index({ user: 1, id: 1 });
+
+// Virtual property
 gameSchema.virtual('isCompleted').get(function() {
   return this.progress === 100;
 });
 
-// Add query helpers (optional)
+// Query helper
 gameSchema.query.byUser = function(userId) {
   return this.where({ user: userId });
 };
