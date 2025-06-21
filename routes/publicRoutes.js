@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const rateLimit = require('express-rate-limit');
 const publicController = require('../controllers/publicController');
+const rateLimit = require('express-rate-limit');
 
-const publicLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per window
-  message: { error: "Too many requests, please try again later" }
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100
 });
 
 /**
@@ -31,6 +30,6 @@ const publicLimiter = rateLimit({
  *               items:
  *                 $ref: '#/components/schemas/PublicGame'
  */
-router.get('/games/:userId', publicLimiter, publicController.getPublicGames);
+router.get('/games/:userId', limiter, publicController.getPublicGames);
 
 module.exports = router;
