@@ -56,6 +56,19 @@ const auth = require('../middlewares/auth');
  *           type: string
  *           format: date-time
  *           readOnly: true
+ *     PublicGame:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *         title:
+ *           type: string
+ *         progress:
+ *           type: number
+ *         difficulty:
+ *           type: string
+ *         isCompleted:
+ *           type: boolean
  */
 
 /**
@@ -63,6 +76,29 @@ const auth = require('../middlewares/auth');
  * tags:
  *   name: Games
  *   description: Game management
+ */
+
+/**
+ * @swagger
+ * /users/{userId}/games:
+ *   get:
+ *     summary: Get public game data for any user
+ *     tags: [Public]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: Public game data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/PublicGame'
  */
 
 /**
@@ -163,6 +199,42 @@ router.get('/', auth.authenticate, gameController.getGames);
  *         description: Game not found
  */
 router.get('/:id', auth.authenticate, gameController.getGame);
+
+/**
+ * @swagger
+ * /games/{id}/visibility:
+ *   patch:
+ *     summary: Toggle game visibility
+ *     tags: [Games]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               isPublic:
+ *                 type: boolean
+ *             required:
+ *               - isPublic
+ *     responses:
+ *       200:
+ *         description: Visibility updated
+ *       404:
+ *         description: Game not found
+ */
+router.patch('/:id/visibility', 
+  auth.authenticate, 
+  gameController.toggleVisibility
+);
 
 /**
  * @swagger

@@ -45,6 +45,21 @@ exports.getGame = async (req, res) => {
   }
 };
 
+exports.toggleVisibility = async (req, res) => {
+  try {
+    const game = await Game.findOneAndUpdate(
+      { _id: req.params.id, user: req.user._id },
+      { isPublic: req.body.isPublic },
+      { new: true }
+    );
+    
+    if (!game) return res.status(404).send();
+    res.send({ isPublic: game.isPublic });
+  } catch (err) {
+    res.status(500).send({ error: "Failed to update visibility" });
+  }
+};
+
 exports.updateGame = async (req, res) => {
   try {
     const { error } = gameValidation.update.validate(req.body);
