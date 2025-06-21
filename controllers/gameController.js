@@ -3,12 +3,20 @@ const { gameValidation } = require('../utils/validation');
 
 exports.createGame = async (req, res) => {
   try {
-    const { error } = gameValidation.create.validate(req.body);
+    // Remove image from required validation since it's auto-generated
+    const { error } = gameValidation.create.validate(req.body, {
+      allowUnknown: true // Allows fields not in schema (like image)
+    });
+    
     if (error) return res.status(400).send({ error: error.details[0].message });
 
-    const game = new Game({ ...req.body, user: req.user._id });
-    await game.save();
+    // Create game with user ID - image will auto-generate via schema
+    const game = new Game({ 
+      ...req.body,
+      user: req.user._id 
+    });
     
+    await game.save();
     res.status(201).send(game);
   } catch (err) {
     if (err.code === 11000) {

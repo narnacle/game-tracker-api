@@ -20,7 +20,7 @@ const gameValidation = {
     difficulty: Joi.string().valid('easy', 'medium', 'hard').required(),
     hours: Joi.number().min(0).required(),
     progress: Joi.number().min(0).max(100).required(),
-    image: Joi.string().uri().required()
+    // Removed image from required fields
   }),
   update: Joi.object({
     hours: Joi.number().min(0),
