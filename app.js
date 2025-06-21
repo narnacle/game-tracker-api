@@ -68,14 +68,14 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
+const publicRoutes = require('./routes/publicRoutes');
+app.use('/public', publicRoutes);
+
 const authRoutes = require('./routes/authRoutes');
 const gameRoutes = require('./routes/gameRoutes');
 
 app.use('/auth', authRoutes);
 app.use('/games', gameRoutes);
-
-const publicRoutes = require('./routes/publicRoutes');
-app.use('/public', publicRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {

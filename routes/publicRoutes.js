@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const Game = require('../models/Game');
 
 /**
@@ -28,21 +27,21 @@ const Game = require('../models/Game');
 // Remove rate limiting temporarily for testing
 router.get('/games/:userId', async (req, res) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.userId)) {
-      return res.status(400).send({ error: "Invalid user ID" });
-    }
-
     const games = await Game.find({
       user: req.params.userId,
       isPublic: true
-    }).lean(); // .lean() for better performance
+    }).select('id title progress difficulty hours createdAt -_id');
+
+    if (!games.length) {
+      return res.status(404).send({ 
+        error: "No public games found or user doesn't exist" 
+      });
+    }
 
     res.send(games.map(game => ({
-      id: game.id,
-      title: game.title,
-      progress: game.progress,
-      difficulty: game.difficulty,
-      isCompleted: game.progress === 100
+      ...game.toObject(),
+      isCompleted: game.progress === 100,
+      image: `https://cdn.cloudflare.steamstatic.com/steam/apps/${game.id}/header.jpg`
     })));
   } catch (err) {
     console.error("Public endpoint error:", err);
