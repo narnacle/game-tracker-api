@@ -85,4 +85,4 @@ See `.env.example` for required variables.
 Distributed under the MIT License.
 
 ## Contact
-Your Name - [@NRPerfectsIT]([https://twitter.com/yourtwitter](https://x.com/NRPerfectsIt)) - contact@narnacle.com
+Narnacle Digital - [@NRPerfectsIT]([https://twitter.com/yourtwitter](https://x.com/NRPerfectsIt)) - contact@narnacle.com
