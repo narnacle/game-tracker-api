@@ -74,6 +74,9 @@ const gameRoutes = require('./routes/gameRoutes');
 app.use('/auth', authRoutes);
 app.use('/games', gameRoutes);
 
+const publicRoutes = require('./routes/publicRoutes');
+app.use('/public', publicRoutes);
+
 // Error handling
 app.use((err, req, res, next) => {
   logger.error(err.stack);

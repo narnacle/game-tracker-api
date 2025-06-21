@@ -52,15 +52,13 @@ const gameSchema = new mongoose.Schema({
         default: true // Or false depending on your preference
     },
 }, {
+    _id: false, // ← THIS DISABLES AUTO _id CREATION
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
 });
 
 // REMOVED the duplicate: gameSchema.index({ id: 1 });
-
-// Keep compound index (not duplicate)
-gameSchema.index({ user: 1, id: 1 });
 
 // Virtual property
 gameSchema.virtual('isCompleted').get(function () {
