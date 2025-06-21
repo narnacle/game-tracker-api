@@ -5,11 +5,33 @@ A RESTful API for tracking game progress with authentication, built with Node.js
 ## Features
 
 - ✅ JWT Authentication
+- 🔒 Per-game visibility controls (public/private)
+- 🌐 Public profile endpoints
+- ⏱️ Rate-limited public access
 - 🛡️ Secure endpoints with rate limiting
 - 📊 MongoDB database integration
 - 📝 Swagger documentation
 - 🧪 Jest testing suite
 - 📦 Ready for deployment
+
+## 🔧 New Endpoints
+
+### Toggle Game Visibility
+```http
+PATCH /games/{id}/visibility
+```
+
+### Request
+```json
+{
+    "isPublic": true
+}
+```
+
+### View Public Games
+```http
+GET /public/games/{userId}
+```
 
 ## Getting Started
 
