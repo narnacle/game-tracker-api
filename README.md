@@ -85,22 +85,4 @@ See `.env.example` for required variables.
 Distributed under the MIT License.
 
 ## Contact
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - youremail@example.com
-
-### Key Features of This README:
-1. **Clear Structure** with emoji sections
-2. **Deployment Badge** for one-click hosting
-3. **API Documentation** ready for Swagger
-4. **Environment Setup** instructions
-5. **Contributing Guidelines** for open source
-
-### To Add This File:
-1. Create `README.md` in your project root
-2. Paste the content above
-3. Customize with your details
-4. Commit:
-   ```bash
-   git add README.md
-   git commit -m "Add comprehensive README"
-   git push origin main
-   ```
+Your Name - [@NRPerfectsIT]([https://twitter.com/yourtwitter](https://x.com/NRPerfectsIt)) - contact@narnacle.com
